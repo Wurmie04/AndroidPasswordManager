@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-androidpasswordmanager-dev-225748-authRole",
+      "UnauthRoleArn": "arn:aws:iam::281271201784:role/amplify-androidpasswordmanager-dev-225748-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::281271201784:role/amplify-androidpasswordmanager-dev-225748-authRole",
+      "Region": "us-west-1",
+      "DeploymentBucketName": "amplify-androidpasswordmanager-dev-225748-deployment",
+      "UnauthRoleName": "amplify-androidpasswordmanager-dev-225748-unauthRole",
+      "StackName": "amplify-androidpasswordmanager-dev-225748",
+      "StackId": "arn:aws:cloudformation:us-west-1:281271201784:stack/amplify-androidpasswordmanager-dev-225748/77f16030-4ba4-11ec-93e6-066d11ed7e71",
+      "AmplifyAppId": "d7twghh80myef"
+    },
+    "categories": {
+      "auth": {
+        "androidpasswordmanager2a0db2b1": {}
+      }
+    }
+  }
+}
