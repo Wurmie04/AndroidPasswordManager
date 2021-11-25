@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -75,6 +76,7 @@ class ShowUserPasswords:AppCompatActivity() {
             }
             textView("Content, Username, Password"){
                 gravity=Gravity.CENTER
+                setPadding(0, 5, 0, 5)
                 textSize = 20.0F
                 Typeface.BOLD
             }
