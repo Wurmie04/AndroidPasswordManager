@@ -1,6 +1,7 @@
 package com.example.androidpasswordmanager
 
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.api.aws.AWSApiPlugin
 import com.amplifyframework.auth.AuthUserAttribute
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var SignUpEmail : String
     private lateinit var SignUpUser : String
     private lateinit var SignUpPass : String
+    private lateinit var reEnterPass : String
     //private lateinit var SignUpPhone : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -174,6 +177,17 @@ class MainActivity : AppCompatActivity() {
                     signupeditTexts.add(this)
                 }
             }
+            linearLayout{
+                textView("Re-Enter Password"){
+                    gravity = Gravity.CENTER
+                }
+                editText{
+                    setHint("Re-Enter Password")
+                    inputType = TYPE_CLASS_TEXT or TYPE_TEXT_VARIATION_PASSWORD
+                    signupeditTexts.add(this)
+
+                }
+            }
             /*linearLayout{
                 textView("Phone Number"){
                     gravity = Gravity.CENTER
@@ -184,7 +198,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }*/
             linearLayout {
-                button("Create User") {
+                button("Sign Up") {
                     textSize = 20.0F
                     //setTextColor(Color.parseColor("#2E1A1E"))
                     //setBackgroundColor(Color.parseColor("#917898"))
@@ -192,6 +206,7 @@ class MainActivity : AppCompatActivity() {
                         SignUpEmail = signupeditTexts.get(0).text.toString()
                         SignUpUser = signupeditTexts.get(1).text.toString()
                         SignUpPass = signupeditTexts.get(2).text.toString()
+                        reEnterPass = signupeditTexts.get(3).text.toString()
                         //SignUpPhone = "+1" + signupeditTexts.get(3).text.toString()
                         /*val attrs = mapOf(
                             AuthUserAttributeKey.email() to "$SignUpEmail",
@@ -201,16 +216,21 @@ class MainActivity : AppCompatActivity() {
                             .userAttributes(attrs.map{ AuthUserAttribute(it.key,it.value) })
                             .build()
                         */
-                        val options = AuthSignUpOptions.builder()
-                            .userAttribute(AuthUserAttributeKey.email(),"$SignUpEmail")
-                            //.userAttribute(AuthUserAttributeKey.phoneNumber(), "$SignUpPhone")
-                            .build()
-                        Amplify.Auth.signUp("$SignUpUser","$SignUpPass",options,
-                            {Log.i("Auth", "Signup Success: $it")},
-                            {Log.e("Auth","Signup Failed", it)})
-                        //if success, go back
-                        //startActivity<MainActivity>("id" to 2)
-                        //if fail, say why
+                        if(SignUpPass == reEnterPass) {
+                            val options = AuthSignUpOptions.builder()
+                                    .userAttribute(AuthUserAttributeKey.email(), "$SignUpEmail")
+                                    //.userAttribute(AuthUserAttributeKey.phoneNumber(), "$SignUpPhone")
+                                    .build()
+                            Amplify.Auth.signUp("$SignUpUser", "$SignUpPass", options,
+                                    { Log.i("Auth", "Signup Success: $it") },
+                                    { Log.e("Auth", "Signup Failed", it) })
+                            //if success, go back
+                            //startActivity<MainActivity>("id" to 2)
+                            //if fail, say why
+                        }
+                        else{
+                            Log.i("Test","Passwords not the same")
+                        }
                     }
                 }
                 button("Cancel"){
@@ -230,7 +250,7 @@ class MainActivity : AppCompatActivity() {
                 button("Verify") {
                     textSize = 15.0F
                     setOnClickListener {
-                        val verifyUser = signupeditTexts.get(3).text.toString()
+                        val verifyUser = signupeditTexts.get(4).text.toString()
                         Amplify.Auth.confirmSignUp(
                             "$SignUpUser", "$verifyUser",
                             { result ->
